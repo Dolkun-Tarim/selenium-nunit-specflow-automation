@@ -2,9 +2,12 @@
 using ApplicationPage;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Chrome;
 using System;
 using System.Configuration;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager.Helpers;
 
 namespace SmokeTest
 {
@@ -16,7 +19,8 @@ namespace SmokeTest
         [NUnit.Framework.SetUp]
         public void Setup()
         {
-            webDriver = new FirefoxDriver(Environment.CurrentDirectory);
+            new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
+            webDriver = new ChromeDriver();
             LoginPage loginPage = new LoginPage(webDriver);
             string url = ConfigurationManager.AppSettings["URL"];
             loginPage.openLoginPage(url);
@@ -76,7 +80,6 @@ namespace SmokeTest
         {
             DashboardPage dashboardPage = new DashboardPage(webDriver);
             dashboardPage.logout();
-            webDriver.Close();
             webDriver.Quit();
         }
     }

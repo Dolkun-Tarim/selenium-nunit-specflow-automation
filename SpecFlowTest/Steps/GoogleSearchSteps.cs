@@ -5,6 +5,10 @@ using System.Text.RegularExpressions;
 using TechTalk.SpecFlow;
 using FluentAssertions;
 using ApplicationPage;
+using OpenQA.Selenium.Chrome;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager.Helpers;
 
 namespace SpecFlowTest.Steps
 {
@@ -28,7 +32,8 @@ namespace SpecFlowTest.Steps
         [When(@"the a user search the string on google")]
         public void WhenTheAUserSearchTheStringOnGoogle()
         {
-            webDriver = new FirefoxDriver(Environment.CurrentDirectory);
+            new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
+            webDriver = new ChromeDriver();
             GoogleSearchPage googleSearchPage = new GoogleSearchPage(webDriver);
             searchResult = googleSearchPage.search(searchWord);
         }
@@ -36,7 +41,6 @@ namespace SpecFlowTest.Steps
         [Then(@"google should return search result")]
         public void ThenGoogleShouldReturnSearchResult()
         {
-            webDriver.Close();
             webDriver.Quit();
             searchResult.Should().BeTrue();
 

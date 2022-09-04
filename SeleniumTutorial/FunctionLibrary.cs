@@ -49,7 +49,7 @@ namespace ApplicationPage
                 try
                 {
                     var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(timeout));
-                    wait.Until(ExpectedConditions.ElementIsVisible(by));
+                    wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(by));
                 }
                 catch (Exception)
                 {

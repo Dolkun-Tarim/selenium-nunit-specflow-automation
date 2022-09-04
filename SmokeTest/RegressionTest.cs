@@ -2,9 +2,10 @@
 using ApplicationPage;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using System;
-using System.Text.RegularExpressions;
+using OpenQA.Selenium.Chrome;
+using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager;
+using WebDriverManager.Helpers;
 
 namespace SmokeTest
 {
@@ -16,7 +17,8 @@ namespace SmokeTest
         [NUnit.Framework.SetUp]
         public void Setup()
         {
-            webDriver = new FirefoxDriver(Environment.CurrentDirectory);
+            new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
+            webDriver = new ChromeDriver();
            
         }
 
@@ -37,7 +39,6 @@ namespace SmokeTest
         [TearDown]
         public void TearDown()
         {
-            webDriver.Close();
             webDriver.Quit();
         }
     }
